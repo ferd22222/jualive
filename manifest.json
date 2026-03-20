@@ -1,0 +1,24 @@
+{
+  "name": "JuaLive",
+  "short_name": "JuaLive",
+  "description": "AI Live Selling Coach — Jadi Jago Live Selling dengan AI",
+  "start_url": "/app.html",
+  "display": "standalone",
+  "background_color": "#0D0D12",
+  "theme_color": "#FF6B35",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

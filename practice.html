@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#FF6B35">
+  <title>Practice Mode — JuaLive</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="app.html" class="navbar-logo">
+        <span class="logo-icon">🎯</span> Practice Mode
+      </a>
+      <div class="navbar-links">
+        <span class="badge badge-success" id="practice-timer">00:00</span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="app-page">
+    <div class="container">
+      <div class="app-header">
+        <h1>Latihan Live 🎯</h1>
+        <p style="margin-top: 4px;">Paste script → mulai latihan → dapat feedback AI</p>
+      </div>
+
+      <!-- Script Input -->
+      <div class="form-group mb-lg">
+        <label class="form-label">Script untuk Latihan</label>
+        <textarea id="practice-script" class="form-textarea" rows="6" placeholder="Paste script dari Script Generator di sini, atau tulis sendiri..."></textarea>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex gap-md" style="margin-bottom: var(--space-lg);">
+        <button id="practice-start" class="btn btn-primary btn-lg btn-full">
+          🎬 Mulai Latihan
+        </button>
+        <button id="practice-stop" class="btn btn-secondary btn-lg btn-full hidden" style="background: var(--secondary); color: white; border: none;">
+          ⏹️ Selesai
+        </button>
+      </div>
+
+      <!-- Teleprompter -->
+      <div id="teleprompter" class="teleprompter hidden" style="margin-bottom: var(--space-lg);">
+        <!-- Lines will be rendered here -->
+      </div>
+
+      <!-- Feedback -->
+      <button id="feedback-btn" class="btn btn-secondary btn-full hidden" style="margin-bottom: var(--space-md);">
+        🤖 Minta Feedback AI
+      </button>
+      <div id="practice-feedback" class="output-box hidden" style="white-space: pre-wrap;">
+        <!-- Feedback will appear here -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-items">
+      <a href="app.html" class="bottom-nav-item">
+        <span class="nav-icon">🏠</span>Home
+      </a>
+      <a href="script.html" class="bottom-nav-item">
+        <span class="nav-icon">📝</span>Script
+      </a>
+      <a href="practice.html" class="bottom-nav-item active">
+        <span class="nav-icon">🎯</span>Practice
+      </a>
+      <a href="timer.html" class="bottom-nav-item">
+        <span class="nav-icon">⏱️</span>Timer
+      </a>
+    </div>
+  </nav>
+
+  <script src="js/storage.js"></script>
+  <script src="js/gemini.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/practice.js"></script>
+</body>
+</html>
