@@ -4,89 +4,106 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#FF6B35">
+  <meta name="description" content="Dashboard JuaLive - AI Live Selling Coach untuk seller Indonesia">
   <title>JuaLive — Dashboard</title>
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/app.css">
+  <style>
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .feature-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 16px; padding: 16px; text-align: center; cursor: pointer;
+      transition: all 0.2s ease; text-decoration: none; color: inherit;
+    }
+    .feature-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .feature-icon { font-size: 2rem; margin-bottom: 6px; }
+    .feature-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 2px; }
+    .feature-desc { font-size: 0.7rem; color: var(--text-tertiary); }
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+    .stat-card { background: var(--card-bg); border-radius: 14px; padding: 14px; text-align: center; }
+    .stat-num { font-size: 1.4rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .stat-label { font-size: 0.65rem; color: var(--text-tertiary); margin-top: 2px; }
+    .quick-tip { background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(255,45,85,0.05) 100%); border: 1px solid rgba(255,107,53,0.15); border-radius: 16px; padding: 16px; margin-bottom: 20px; }
+    .tip-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 6px; }
+    .tip-text { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; }
+  </style>
 </head>
 <body>
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="container">
-      <a href="index.html" class="navbar-logo">
+      <a href="app.html" class="navbar-logo">
         <span class="logo-icon">🎙️</span> JuaLive
       </a>
       <div class="navbar-links">
-        <button class="btn btn-ghost btn-sm" onclick="App.showApiKeyModal()">⚙️ Setting</button>
+        <a href="riwayat.html" style="color: var(--text-secondary); font-size: 0.85rem; text-decoration: none;">📚 Riwayat</a>
       </div>
     </div>
   </nav>
 
-  <!-- App Content -->
   <main class="app-page">
     <div class="container">
       <div class="app-header">
         <h1>Halo, Seller! 👋</h1>
-        <p style="margin-top: 4px;">Mau jualan live apa hari ini?</p>
+        <p style="margin-top: 4px;">Siap live hari ini?</p>
       </div>
 
-      <!-- Quick Stats -->
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); margin-bottom: var(--space-xl);">
-        <div class="card" style="text-align: center; padding: var(--space-md);">
-          <div class="text-gradient" style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800;" id="stat-scripts">0</div>
-          <div class="text-xs" style="color: var(--text-tertiary); margin-top: 2px;">Script Dibuat</div>
+      <!-- Stats -->
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-num" id="stat-scripts">0</div>
+          <div class="stat-label">Script Dibuat</div>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-md);">
-          <div class="text-gradient" style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800;" id="stat-practices">0</div>
-          <div class="text-xs" style="color: var(--text-tertiary); margin-top: 2px;">Sesi Latihan</div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-practices">0</div>
+          <div class="stat-label">Latihan</div>
         </div>
-        <div class="card" style="text-align: center; padding: var(--space-md);">
-          <div class="text-gradient" style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800;" id="stat-usage">0/3</div>
-          <div class="text-xs" style="color: var(--text-tertiary); margin-top: 2px;">Kuota Hari Ini</div>
+        <div class="stat-card">
+          <div class="stat-num" id="stat-usage">0/3</div>
+          <div class="stat-label">AI Hari Ini</div>
         </div>
       </div>
 
-      <!-- Feature Cards -->
-      <div class="flex-col gap-md">
-        <a href="script.html" class="card" style="display: flex; align-items: center; gap: var(--space-md); text-decoration: none; cursor: pointer;">
-          <div class="feature-icon" style="flex-shrink: 0;">📝</div>
-          <div>
-            <h4 style="color: var(--text-primary);">Script Generator</h4>
-            <p class="text-sm">Buat script live selling lengkap dalam hitungan detik</p>
-          </div>
-          <div style="margin-left: auto; color: var(--text-tertiary); font-size: 1.2rem;">→</div>
+      <!-- Quick Tip -->
+      <div class="quick-tip" id="daily-tip">
+        <div class="tip-title">💡 Tips Hari Ini</div>
+        <div class="tip-text" id="tip-text">Sapa viewers baru yang masuk dalam 3 detik pertama. Ini bikin mereka stay lebih lama di live kamu!</div>
+      </div>
+
+      <!-- Feature Grid -->
+      <h3 style="font-size: 0.9rem; margin-bottom: 12px;">🚀 Fitur</h3>
+      <div class="feature-grid">
+        <a href="script.html" class="feature-card">
+          <div class="feature-icon">📝</div>
+          <div class="feature-name">Script AI</div>
+          <div class="feature-desc">Generate script custom</div>
         </a>
-
-        <a href="practice.html" class="card" style="display: flex; align-items: center; gap: var(--space-md); text-decoration: none; cursor: pointer;">
-          <div class="feature-icon" style="flex-shrink: 0;">🎯</div>
-          <div>
-            <h4 style="color: var(--text-primary);">Practice Mode</h4>
-            <p class="text-sm">Latihan live selling dengan teleprompter & feedback AI</p>
-          </div>
-          <div style="margin-left: auto; color: var(--text-tertiary); font-size: 1.2rem;">→</div>
+        <a href="templates.html" class="feature-card">
+          <div class="feature-icon">📋</div>
+          <div class="feature-name">Template</div>
+          <div class="feature-desc">12+ siap pakai</div>
         </a>
-
-        <a href="timer.html" class="card" style="display: flex; align-items: center; gap: var(--space-md); text-decoration: none; cursor: pointer;">
-          <div class="feature-icon" style="flex-shrink: 0;">⏱️</div>
-          <div>
-            <h4 style="color: var(--text-primary);">Live Timer</h4>
-            <p class="text-sm">Countdown timer + tips otomatis saat live selling</p>
-          </div>
-          <div style="margin-left: auto; color: var(--text-tertiary); font-size: 1.2rem;">→</div>
+        <a href="practice.html" class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <div class="feature-name">Latihan</div>
+          <div class="feature-desc">Teleprompter + feedback</div>
+        </a>
+        <a href="timer.html" class="feature-card">
+          <div class="feature-icon">⏱️</div>
+          <div class="feature-name">Live Timer</div>
+          <div class="feature-desc">Timer + tips otomatis</div>
         </a>
       </div>
 
-      <!-- Tip of the Day -->
-      <div class="card" style="margin-top: var(--space-xl); background: var(--gradient-card); border-color: rgba(255,107,53,0.15);">
-        <div style="display: flex; gap: var(--space-sm); align-items: start;">
-          <span style="font-size: 1.3rem;">💡</span>
-          <div>
-            <h4 style="font-size: 0.9rem; margin-bottom: 4px;">Tips Hari Ini</h4>
-            <p class="text-sm">30 detik pertama live = penentu segalanya! Buka dengan hook yang bikin penonton penasaran, bukan langsung jualan.</p>
-          </div>
-        </div>
-      </div>
+      <!-- Quick Actions -->
+      <h3 style="font-size: 0.9rem; margin-bottom: 12px;">⚡ Aksi Cepat</h3>
+      <a href="templates.html" class="btn btn-primary btn-full" style="margin-bottom: 10px; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+        📋 Ambil Template Siap Pakai
+      </a>
+      <a href="script.html" class="btn btn-secondary btn-full" style="margin-bottom: 10px; text-decoration: none; display: flex; align-items: center; justify-content: center;">
+        ✨ Buat Script Baru dengan AI
+      </a>
     </div>
   </main>
 
@@ -94,20 +111,19 @@
   <nav class="bottom-nav">
     <div class="bottom-nav-items">
       <a href="app.html" class="bottom-nav-item active">
-        <span class="nav-icon">🏠</span>
-        Home
+        <span class="nav-icon">🏠</span>Home
       </a>
       <a href="script.html" class="bottom-nav-item">
-        <span class="nav-icon">📝</span>
-        Script
+        <span class="nav-icon">📝</span>Script
+      </a>
+      <a href="templates.html" class="bottom-nav-item">
+        <span class="nav-icon">📋</span>Template
       </a>
       <a href="practice.html" class="bottom-nav-item">
-        <span class="nav-icon">🎯</span>
-        Practice
+        <span class="nav-icon">🎯</span>Latihan
       </a>
       <a href="timer.html" class="bottom-nav-item">
-        <span class="nav-icon">⏱️</span>
-        Timer
+        <span class="nav-icon">⏱️</span>Timer
       </a>
     </div>
   </nav>
@@ -116,7 +132,26 @@
   <script src="js/gemini.js"></script>
   <script src="js/app.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => App.updateStats());
+    document.addEventListener('DOMContentLoaded', () => {
+      App.updateStats();
+
+      // Daily tips rotation
+      const tips = [
+        "Sapa viewers baru yang masuk dalam 3 detik pertama. Ini bikin mereka stay lebih lama!",
+        "Sebutkan harga produk minimal 3x selama live. Banyak viewers yang baru masuk belum dengar!",
+        "Buat urgency: 'Stok tinggal 5!' — ini bikin checkout rate naik sampai 3x!",
+        "Mulai live 15 menit sebelum jam ramai. Biar pas viewers banyak, kamu udah warm up!",
+        "Jawab komentar sebut nama viewers-nya. Personal touch bikin mereka lebih loyal!",
+        "Tunjukkan produk dari berbagai angle. Viewers online butuh lebih banyak visual!",
+        "Ceritakan kisah di balik produk. Storytelling bikin emotional connection!",
+        "Pake background yang rapi & terang. First impression menentukan viewers stay atau pergi!",
+        "Minta viewers like & share. Engagement boost = lebih banyak viewers masuk!",
+        "Latihan sebelum live! 5 menit rehearsal bisa ningkatin kepercayaan diri 80%!"
+      ];
+      const todayIdx = new Date().getDate() % tips.length;
+      const tipEl = document.getElementById('tip-text');
+      if (tipEl) tipEl.textContent = tips[todayIdx];
+    });
   </script>
 </body>
 </html>

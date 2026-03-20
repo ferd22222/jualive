@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#FF6B35">
+  <title>Template Siap Pakai — JuaLive</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+    .cat-chip {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 12px 6px; border-radius: 14px; cursor: pointer;
+      background: var(--card-bg); border: 2px solid transparent;
+      transition: all 0.2s ease; font-size: 0.72rem; text-align: center;
+    }
+    .cat-chip:hover, .cat-chip.active { border-color: var(--primary); background: rgba(255,107,53,0.1); transform: scale(1.03); }
+    .cat-chip .cat-icon { font-size: 1.5rem; }
+    .template-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 16px; padding: 16px; margin-bottom: 12px;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .template-card:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .template-title { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+    .template-desc { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px; }
+    .template-hook { font-size: 0.85rem; padding: 8px 12px; background: rgba(255,107,53,0.08); border-radius: 10px; color: var(--primary-light); }
+    .template-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .template-tag { font-size: 0.65rem; padding: 2px 8px; border-radius: 20px; background: rgba(255,255,255,0.06); color: var(--text-tertiary); }
+    .template-detail { display: none; }
+    .template-detail.show { display: block; }
+    .template-script-box {
+      background: var(--bg-secondary); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px; white-space: pre-wrap;
+      font-size: 0.85rem; line-height: 1.7; color: var(--text-secondary);
+      max-height: 400px; overflow-y: auto; margin: 12px 0;
+    }
+    .search-box {
+      position: relative; margin-bottom: 16px;
+    }
+    .search-box input {
+      width: 100%; padding: 12px 16px 12px 40px; border-radius: 14px;
+      background: var(--card-bg); border: 1px solid var(--border);
+      color: var(--text-primary); font-size: 0.9rem;
+    }
+    .search-box input:focus { border-color: var(--primary); outline: none; }
+    .search-box::before { content: '🔍'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a href="app.html" class="navbar-logo">
+        <span class="logo-icon">📋</span> Template
+      </a>
+      <div class="navbar-links">
+        <span class="badge badge-success" id="template-count">12 template</span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="app-page">
+    <div class="container">
+      <div class="app-header">
+        <h1>Template Siap Pakai 📋</h1>
+        <p style="margin-top: 4px;">Pilih kategori → tap template → langsung copy & pakai!</p>
+      </div>
+
+      <!-- Search -->
+      <div class="search-box">
+        <input type="text" id="search-input" placeholder="Cari template... (misal: gamis, serum)" autocomplete="off">
+      </div>
+
+      <!-- Categories -->
+      <div class="cat-grid" id="cat-grid">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Templates List -->
+      <div id="templates-list">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Template Detail (popup/expanded) -->
+      <div id="template-detail" class="template-detail">
+        <div class="card" style="position: relative;">
+          <button onclick="Templates.closeDetail()" style="position:absolute;right:12px;top:12px;background:none;border:none;color:var(--text-secondary);font-size:1.3rem;cursor:pointer;">✕</button>
+          <h3 id="detail-title" style="margin-bottom: 4px;"></h3>
+          <p id="detail-desc" style="font-size: 0.8rem; color: var(--text-tertiary); margin-bottom: 12px;"></p>
+          <div id="detail-script" class="template-script-box"></div>
+          <div class="flex gap-md">
+            <button class="btn btn-primary btn-full" onclick="Templates.copyScript()">📋 Copy Script</button>
+            <button class="btn btn-secondary" onclick="Templates.shareScript()" style="flex-shrink:0;">📤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-items">
+      <a href="app.html" class="bottom-nav-item">
+        <span class="nav-icon">🏠</span>Home
+      </a>
+      <a href="script.html" class="bottom-nav-item">
+        <span class="nav-icon">📝</span>Script
+      </a>
+      <a href="templates.html" class="bottom-nav-item active">
+        <span class="nav-icon">📋</span>Template
+      </a>
+      <a href="practice.html" class="bottom-nav-item">
+        <span class="nav-icon">🎯</span>Latihan
+      </a>
+      <a href="timer.html" class="bottom-nav-item">
+        <span class="nav-icon">⏱️</span>Timer
+      </a>
+    </div>
+  </nav>
+
+  <script src="js/storage.js"></script>
+  <script src="js/gemini.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/templates-data.js"></script>
+  <script>
+    const Templates = {
+      activeCategory: null,
+      currentScript: '',
+
+      init() {
+        this.renderCategories();
+        this.renderAll();
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+          const q = e.target.value.trim();
+          if (q.length > 1) {
+            this.renderSearch(q);
+          } else if (q.length === 0) {
+            if (this.activeCategory) this.renderCategory(this.activeCategory);
+            else this.renderAll();
+          }
+        });
+      },
+
+      renderCategories() {
+        const grid = document.getElementById('cat-grid');
+        grid.innerHTML = TemplateData.categories.map(cat => `
+          <div class="cat-chip" data-cat="${cat.id}" onclick="Templates.selectCategory('${cat.id}')">
+            <span class="cat-icon">${cat.icon}</span>
+            <span>${cat.name}</span>
+          </div>
+        `).join('');
+      },
+
+      selectCategory(catId) {
+        this.activeCategory = catId === this.activeCategory ? null : catId;
+
+        // Update chips
+        document.querySelectorAll('.cat-chip').forEach(el => {
+          el.classList.toggle('active', el.dataset.cat === this.activeCategory);
+        });
+
+        if (this.activeCategory) {
+          this.renderCategory(this.activeCategory);
+        } else {
+          this.renderAll();
+        }
+      },
+
+      renderAll() {
+        const list = document.getElementById('templates-list');
+        list.innerHTML = TemplateData.templates.map(t => this.cardHTML(t)).join('');
+      },
+
+      renderCategory(catId) {
+        const list = document.getElementById('templates-list');
+        const templates = TemplateData.getByCategory(catId);
+        if (templates.length === 0) {
+          list.innerHTML = '<p style="text-align:center;color:var(--text-tertiary);padding:20px;">Belum ada template untuk kategori ini</p>';
+        } else {
+          list.innerHTML = templates.map(t => this.cardHTML(t)).join('');
+        }
+      },
+
+      renderSearch(query) {
+        const list = document.getElementById('templates-list');
+        const results = TemplateData.search(query);
+        if (results.length === 0) {
+          list.innerHTML = '<p style="text-align:center;color:var(--text-tertiary);padding:20px;">Tidak ditemukan. Coba kata kunci lain 🔍</p>';
+        } else {
+          list.innerHTML = results.map(t => this.cardHTML(t)).join('');
+        }
+      },
+
+      cardHTML(t) {
+        return `
+          <div class="template-card" onclick="Templates.showDetail(${t.id})">
+            <div class="template-title">${t.title}</div>
+            <div class="template-desc">${t.desc}</div>
+            <div class="template-hook">${t.hook}</div>
+            <div class="template-tags">${t.tags.map(tag => `<span class="template-tag">#${tag}</span>`).join('')}</div>
+          </div>
+        `;
+      },
+
+      showDetail(id) {
+        const t = TemplateData.getById(id);
+        if (!t) return;
+
+        this.currentScript = t.script;
+        document.getElementById('detail-title').textContent = t.title;
+        document.getElementById('detail-desc').textContent = t.desc;
+        document.getElementById('detail-script').textContent = t.script;
+        document.getElementById('template-detail').classList.add('show');
+        document.getElementById('templates-list').style.display = 'none';
+        document.getElementById('cat-grid').style.display = 'none';
+        document.querySelector('.search-box').style.display = 'none';
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+
+      closeDetail() {
+        document.getElementById('template-detail').classList.remove('show');
+        document.getElementById('templates-list').style.display = 'block';
+        document.getElementById('cat-grid').style.display = 'grid';
+        document.querySelector('.search-box').style.display = 'block';
+      },
+
+      copyScript() {
+        App.copyText(this.currentScript);
+      },
+
+      shareScript() {
+        App.shareWhatsApp(this.currentScript);
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => Templates.init());
+  </script>
+</body>
+</html>
