@@ -9,7 +9,7 @@ const GeminiAI = {
   proxyUrl: 'https://jualive-api.ferdan8871.workers.dev',
 
   // Mode: 'proxy' (production) atau 'direct' (development/testing)
-  mode: 'direct',
+  mode: 'proxy',
 
   // Direct mode config (untuk development saja)
   apiKey: '',
