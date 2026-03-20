@@ -6,7 +6,7 @@
 const GeminiAI = {
   // URL backend proxy (Cloudflare Worker)
   // Ganti ini setelah deploy worker
-  proxyUrl: '',
+  proxyUrl: 'https://jualive-api.ferdan8871.workers.dev',
 
   // Mode: 'proxy' (production) atau 'direct' (development/testing)
   mode: 'direct',
